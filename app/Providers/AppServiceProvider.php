@@ -13,7 +13,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        if( is_api_domain() and request()->getLanguages() ) {
+            $preferred = request()->getPreferredLanguage();
+            $locale = str_contains($preferred, ['ko_KR' => 'ko', 'ko' => 'ko']) ? 'ko' : 'en';
+            app()->setLocale($locale);
+        }
     }
 
     /**
